@@ -19,6 +19,7 @@ package android.transition.support;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +100,7 @@ public class Fade extends Visibility {
      * Utility method to handle creating and running the Animator.
      */
     private Animator createAnimation(View view, float startAlpha, float endAlpha,
-            AnimatorListenerAdapter listener) {
+                                     AnimatorListenerAdapter listener) {
         if (startAlpha == endAlpha) {
             // run listener if we're noop'ing the animation, to get the end-state results now
             if (listener != null) {
@@ -135,8 +136,8 @@ public class Fade extends Visibility {
 
     @Override
     public Animator onAppear(ViewGroup sceneRoot,
-            TransitionValues startValues, int startVisibility,
-            TransitionValues endValues, int endVisibility) {
+                             TransitionValues startValues, int startVisibility,
+                             TransitionValues endValues, int endVisibility) {
         if ((mFadingMode & IN) != IN || endValues == null) {
             return null;
         }
@@ -187,8 +188,8 @@ public class Fade extends Visibility {
 
     @Override
     public Animator onDisappear(ViewGroup sceneRoot,
-            TransitionValues startValues, int startVisibility,
-            TransitionValues endValues, int endVisibility) {
+                                TransitionValues startValues, int startVisibility,
+                                TransitionValues endValues, int endVisibility) {
         if ((mFadingMode & OUT) != OUT) {
             return null;
         }
@@ -197,7 +198,7 @@ public class Fade extends Visibility {
         View endView = (endValues != null) ? endValues.view : null;
         if (DBG) {
             Log.d(LOG_TAG, "Fade.onDisappear: startView, startVis, endView, endVis = " +
-                        startView + ", " + startVisibility + ", " + endView + ", " + endVisibility);
+                    startView + ", " + startVisibility + ", " + endView + ", " + endVisibility);
         }
         View overlayView = null;
         View viewToKeep = null;
@@ -250,8 +251,14 @@ public class Fade extends Visibility {
             sceneRoot.getLocationOnScreen(loc);
             overlayView.offsetLeftAndRight((screenX - loc[0]) - overlayView.getLeft());
             overlayView.offsetTopAndBottom((screenY - loc[1]) - overlayView.getTop());
-            //TODO
-//            sceneRoot.getOverlay().add(overlayView);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+                sceneRoot.getOverlay().add(overlayView);
+            else
+            {
+                //TODO
+            }
+
             // TODO: add automatic facility to Visibility superclass for keeping views around
             final float startAlpha = 1;
             float endAlpha = 0;
@@ -267,9 +274,17 @@ public class Fade extends Visibility {
                     if (finalViewToKeep != null) {
                         finalViewToKeep.setVisibility(finalVisibility);
                     }
-//                    if (finalOverlayView != null) {
-//                        finalSceneRoot.getOverlay().remove(finalOverlayView);
-//                    }
+
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+                    {
+                        if (finalOverlayView != null) {
+                            finalSceneRoot.getOverlay().remove(finalOverlayView);
+                        }
+                    }
+                    else
+                    {
+                        //TODO
+                    }
                 }
 //TODO
 //                @Override
@@ -336,8 +351,14 @@ public class Fade extends Visibility {
                         finalViewToKeep.setVisibility(finalVisibility);
                     }
                     if (finalOverlayView != null) {
-                        //TODO
-//                        finalSceneRoot.getOverlay().remove(finalOverlayView);
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+                        {
+                            finalSceneRoot.getOverlay().remove(finalOverlayView);
+                        }
+                        else
+                        {
+                            //TODO
+                        }
                     }
                 }
             };

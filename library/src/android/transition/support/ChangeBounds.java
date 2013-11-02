@@ -24,6 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.transition.support.utils.RectEvaluator;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +104,7 @@ public class ChangeBounds extends Transition {
 
     @Override
     public Animator createAnimator(final ViewGroup sceneRoot, TransitionValues startValues,
-            TransitionValues endValues) {
+                                   TransitionValues endValues) {
         if (startValues == null || endValues == null) {
             return null;
         }
@@ -267,8 +268,14 @@ public class ChangeBounds extends Transition {
                     anim.addListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
-                            //TODO
-//                            view.setClipBounds(null);
+                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+                            {
+                                view.setClipBounds(null);
+                            }
+                            else
+                            {
+                                //TODO
+                            }
                         }
                     });
                     return anim;
@@ -288,8 +295,14 @@ public class ChangeBounds extends Transition {
                 view.draw(canvas);
                 final BitmapDrawable drawable = new BitmapDrawable(bitmap);
                 view.setVisibility(View.INVISIBLE);
-                //TODO
-//                sceneRoot.getOverlay().add(drawable);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+                {
+                    sceneRoot.getOverlay().add(drawable);
+                }
+                else
+                {
+                    //TODO
+                }
                 Rect startBounds1 = new Rect(startX - tempLocation[0], startY - tempLocation[1],
                         startX - tempLocation[0] + view.getWidth(),
                         startY - tempLocation[1] + view.getHeight());
@@ -301,8 +314,14 @@ public class ChangeBounds extends Transition {
                 anim.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        //TODO
-//                        sceneRoot.getOverlay().remove(drawable);
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+                        {
+                            sceneRoot.getOverlay().remove(drawable);
+                        }
+                        else
+                        {
+                            //TODO
+                        }
                         view.setVisibility(View.VISIBLE);
                     }
                 });
