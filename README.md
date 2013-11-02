@@ -1,7 +1,7 @@
 TransitionsBackport
 ===================
 
-Android library for using the [Transitions API released with Android KitKat][1] on older versions of Android. At the moment it is compatible with Android 4.0 (API 14) and above.
+Android library for using the [Transitions API released with Android KitKat][1] on older versions of Android. At the moment, it is compatible with Android 4.0 (API 14) and above.
 
 
 Usage
