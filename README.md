@@ -10,6 +10,10 @@ Usage
 The API is exactly the same as the [Transitions API][2], just change your imports
 to use `android.transition.support.XXX`.
 
+You can take a look at [this video][3] from Chet Haase explaining how to use the Transitions API.
+
+This is an early backport, some features may not be available yet.
+
 
 Developed By
 ============
@@ -36,3 +40,5 @@ License
     limitations under the License.
 
 [1]: http://developer.android.com/reference/android/transition/package-summary.html
+[2]: http://developer.android.com/reference/android/transition/package-summary.html
+[3]: https://www.youtube.com/watch?v=S3H7nJ4QaD8
