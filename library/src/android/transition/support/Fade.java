@@ -107,7 +107,7 @@ public class Fade extends Visibility {
             }
             return null;
         }
-        final ObjectAnimator anim = ObjectAnimator.ofFloat(view, "transitionAlpha", startAlpha,
+        final ObjectAnimator anim = ObjectAnimator.ofFloat(view, "alpha", startAlpha,
                 endAlpha);
         if (DBG) {
             Log.d(LOG_TAG, "Created animator " + anim);
