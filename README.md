@@ -1,14 +1,15 @@
 TransitionsBackport
 ===================
 
-Android library for using the [Transitions API released with Android KitKat][1] on API version 14 and above.
+Android library for using the [Transitions API released with Android KitKat][1] on older versions of Android. At the moment it is compatible with Android 4.0 (API 14) and above.
 
 
 Usage
 =====
 
 The API is exactly the same as the [Transitions API][2], just change your imports
-to use `android.transition.support.XXX`.
+from `android.transition.XXX` to `android.transition.support.XXX`. 
+If you use XML files to create your transitions you need to put them in the res/anim folder instead of the res/transition folder.
 
 You can take a look at [this video][3] from Chet Haase explaining how to use the Transitions API.
 
