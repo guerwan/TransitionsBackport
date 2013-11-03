@@ -10,6 +10,8 @@ Usage
 The API is exactly the same as the [Transitions API][2], just change your imports
 from `android.transition.XXX` to `android.transition.support.XXX`. 
 If you use XML files to create your transitions you need to put them in the res/anim folder instead of the res/transition folder.
+Also as your scene root you should use `CompatLinearLayout` or `CompatRelativeLayout` (or your own `ViewGroup`
+implementing the `ViewGroupCompatInterface`) to be compatible with all the transitions.
 
 You can take a look at [this video][3] from Chet Haase explaining how to use the Transitions API.
 
