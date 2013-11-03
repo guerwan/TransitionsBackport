@@ -13,11 +13,12 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <changeBounds/>
-    <fade android:fadingMode="fade_in" >
+    <fade app:fadingMode="fade_in" >
         <targets>
-            <target android:targetId="@id/grayscaleContainer" />
+            <target app:targetId="@id/grayscaleContainer" />
         </targets>
     </fade>
 </transitionSet>

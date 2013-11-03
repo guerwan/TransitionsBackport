@@ -14,20 +14,21 @@
      limitations under the License.
 -->
 
-<transitionManager xmlns:android="http://schemas.android.com/apk/res/android">
-    <transition android:fromScene="@layout/transition_scene1"
-                android:toScene="@layout/transition_scene2"
-                android:transition="@anim/changebounds"/>
-    <transition android:fromScene="@layout/transition_scene2"
-                android:toScene="@layout/transition_scene1"
-                android:transition="@anim/changebounds"/>
-    <transition android:toScene="@layout/transition_scene3"
-                android:transition="@anim/changebounds_fadein_together"/>
-    <transition android:fromScene="@layout/transition_scene3"
-                android:toScene="@layout/transition_scene1"
-                android:transition="@anim/changebounds_fadeout_sequential"/>
-    <transition android:fromScene="@layout/transition_scene3"
-                android:toScene="@layout/transition_scene2"
-                android:transition="@anim/changebounds_fadeout_sequential"/>
+<transitionManager xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <transition app:fromScene="@layout/transition_scene1"
+        app:toScene="@layout/transition_scene2"
+        app:transition="@anim/changebounds"/>
+    <transition app:fromScene="@layout/transition_scene2"
+        app:toScene="@layout/transition_scene1"
+        app:transition="@anim/changebounds"/>
+    <transition app:toScene="@layout/transition_scene3"
+        app:transition="@anim/changebounds_fadein_together"/>
+    <transition app:fromScene="@layout/transition_scene3"
+        app:toScene="@layout/transition_scene1"
+        app:transition="@anim/changebounds_fadeout_sequential"/>
+    <transition app:fromScene="@layout/transition_scene3"
+        app:toScene="@layout/transition_scene2"
+        app:transition="@anim/changebounds_fadeout_sequential"/>
 </transitionManager>
 

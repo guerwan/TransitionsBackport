@@ -15,11 +15,12 @@
 -->
 
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
-     android:transitionOrdering="sequential">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:transitionOrdering="sequential">
     <changeBounds/>
-    <fade android:fadingMode="fade_out" >
+    <fade app:fadingMode="fade_out" >
         <targets>
-            <target android:targetId="@id/grayscaleContainer" />
+            <target app:targetId="@id/grayscaleContainer" />
         </targets>
     </fade>
 </transitionSet>
