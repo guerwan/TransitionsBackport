@@ -23,6 +23,7 @@ import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.support.ViewGroupCompatInterface;
 
 /**
  * This transition tracks changes to the visibility of target views in the
@@ -35,7 +36,7 @@ import android.view.ViewGroup;
  * way that that fading operation takes place, is based on
  * the situation of the view in the view hierarchy. For example, if a view was
  * simply removed from its parent, then the view will be added into a {@link
- * android.view.ViewGroupOverlay} while fading. If a visible view is
+ * android.view.support.ViewGroupOverlay} while fading. If a visible view is
  * changed to be {@link android.view.View#GONE} or {@link android.view.View#INVISIBLE}, then the
  * visibility will be changed to {@link android.view.View#VISIBLE} for the duration of
  * the animation. However, if a view is in a hierarchy which is also altering
@@ -256,7 +257,11 @@ public class Fade extends Visibility {
                 sceneRoot.getOverlay().add(overlayView);
             else
             {
-                //TODO
+                if(sceneRoot instanceof ViewGroupCompatInterface)
+                {
+                    ((ViewGroupCompatInterface)sceneRoot).getCompatOverlay().add(overlayView);
+                }
+                //TODO ViewOverlay
             }
 
             // TODO: add automatic facility to Visibility superclass for keeping views around
@@ -283,7 +288,11 @@ public class Fade extends Visibility {
                     }
                     else
                     {
-                        //TODO
+                        if(finalSceneRoot instanceof ViewGroupCompatInterface)
+                        {
+                            ((ViewGroupCompatInterface)finalSceneRoot).getCompatOverlay().remove(finalOverlayView);
+                        }
+                        //TODO ViewOverlay
                     }
                 }
 //TODO
@@ -357,7 +366,11 @@ public class Fade extends Visibility {
                         }
                         else
                         {
-                            //TODO
+                            if(finalSceneRoot instanceof ViewGroupCompatInterface)
+                            {
+                                ((ViewGroupCompatInterface)finalSceneRoot).getCompatOverlay().remove(finalOverlayView);
+                            }
+                            //TODO ViewOverlay
                         }
                     }
                 }

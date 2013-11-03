@@ -49,7 +49,7 @@
 
     </RadioGroup>
 
-    <LinearLayout
+    <android.view.support.CompatLinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -57,5 +57,6 @@
 
         <include layout="@layout/transition_scene1"/>
 
-    </LinearLayout>
+    </android.view.support.CompatLinearLayout>
+
 </LinearLayout>
