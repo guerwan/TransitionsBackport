@@ -25,10 +25,10 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.transition.support.utils.OverlayCompatibilityHelper;
 import android.transition.support.utils.RectEvaluator;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.support.ViewGroupCompatInterface;
 
 import java.util.Map;
 
@@ -296,18 +296,9 @@ public class ChangeBounds extends Transition {
                 view.draw(canvas);
                 final BitmapDrawable drawable = new BitmapDrawable(sceneRoot.getContext().getResources(), bitmap);
                 view.setVisibility(View.INVISIBLE);
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-                {
-                    sceneRoot.getOverlay().add(drawable);
-                }
-                else
-                {
-                    if(sceneRoot instanceof ViewGroupCompatInterface)
-                    {
-                        ((ViewGroupCompatInterface)sceneRoot).getCompatOverlay().add(drawable);
-                    }
-                    //TODO ViewOverlay
-                }
+
+                OverlayCompatibilityHelper.addViewOverlay(sceneRoot, drawable);
+
                 Rect startBounds1 = new Rect(startX - tempLocation[0], startY - tempLocation[1],
                         startX - tempLocation[0] + view.getWidth(),
                         startY - tempLocation[1] + view.getHeight());
@@ -319,18 +310,7 @@ public class ChangeBounds extends Transition {
                 anim.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-                        {
-                            sceneRoot.getOverlay().remove(drawable);
-                        }
-                        else
-                        {
-                            if(sceneRoot instanceof ViewGroupCompatInterface)
-                            {
-                                ((ViewGroupCompatInterface)sceneRoot).getCompatOverlay().remove(drawable);
-                            }
-                            //TODO ViewOverlay
-                        }
+                        OverlayCompatibilityHelper.removeViewOverlay(sceneRoot, drawable);
                         view.setVisibility(View.VISIBLE);
                     }
                 });

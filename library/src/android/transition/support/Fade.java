@@ -19,11 +19,10 @@ package android.transition.support;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.os.Build;
+import android.transition.support.utils.OverlayCompatibilityHelper;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.support.ViewGroupCompatInterface;
 
 /**
  * This transition tracks changes to the visibility of target views in the
@@ -36,7 +35,7 @@ import android.view.support.ViewGroupCompatInterface;
  * way that that fading operation takes place, is based on
  * the situation of the view in the view hierarchy. For example, if a view was
  * simply removed from its parent, then the view will be added into a {@link
- * android.view.support.ViewGroupOverlay} while fading. If a visible view is
+ * android.view.ViewGroupOverlay} while fading. If a visible view is
  * changed to be {@link android.view.View#GONE} or {@link android.view.View#INVISIBLE}, then the
  * visibility will be changed to {@link android.view.View#VISIBLE} for the duration of
  * the animation. However, if a view is in a hierarchy which is also altering
@@ -248,21 +247,9 @@ public class Fade extends Visibility {
             // TODO: Need to do this for general case of adding to overlay
             int screenX = (Integer) startValues.values.get(PROPNAME_SCREEN_X);
             int screenY = (Integer) startValues.values.get(PROPNAME_SCREEN_Y);
-            int[] loc = new int[2];
-            sceneRoot.getLocationOnScreen(loc);
-            overlayView.offsetLeftAndRight((screenX - loc[0]) - overlayView.getLeft());
-            overlayView.offsetTopAndBottom((screenY - loc[1]) - overlayView.getTop());
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-                sceneRoot.getOverlay().add(overlayView);
-            else
-            {
-                if(sceneRoot instanceof ViewGroupCompatInterface)
-                {
-                    ((ViewGroupCompatInterface)sceneRoot).getCompatOverlay().add(overlayView);
-                }
-                //TODO ViewOverlay
-            }
+            OverlayCompatibilityHelper.addViewOverlay(sceneRoot, overlayView, screenX, screenY);
+
 
             // TODO: add automatic facility to Visibility superclass for keeping views around
             final float startAlpha = 1;
@@ -280,20 +267,7 @@ public class Fade extends Visibility {
                         finalViewToKeep.setVisibility(finalVisibility);
                     }
 
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-                    {
-                        if (finalOverlayView != null) {
-                            finalSceneRoot.getOverlay().remove(finalOverlayView);
-                        }
-                    }
-                    else
-                    {
-                        if(finalSceneRoot instanceof ViewGroupCompatInterface)
-                        {
-                            ((ViewGroupCompatInterface)finalSceneRoot).getCompatOverlay().remove(finalOverlayView);
-                        }
-                        //TODO ViewOverlay
-                    }
+                    OverlayCompatibilityHelper.removeViewOverlay(finalSceneRoot, finalOverlayView);
                 }
 //TODO
 //                @Override
@@ -359,20 +333,8 @@ public class Fade extends Visibility {
                     if (finalViewToKeep != null && !mCanceled) {
                         finalViewToKeep.setVisibility(finalVisibility);
                     }
-                    if (finalOverlayView != null) {
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-                        {
-                            finalSceneRoot.getOverlay().remove(finalOverlayView);
-                        }
-                        else
-                        {
-                            if(finalSceneRoot instanceof ViewGroupCompatInterface)
-                            {
-                                ((ViewGroupCompatInterface)finalSceneRoot).getCompatOverlay().remove(finalOverlayView);
-                            }
-                            //TODO ViewOverlay
-                        }
-                    }
+
+                    OverlayCompatibilityHelper.removeViewOverlay(finalSceneRoot, finalOverlayView);
                 }
             };
             return createAnimation(view, startAlpha, endAlpha, endListener);

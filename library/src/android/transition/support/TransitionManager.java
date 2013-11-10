@@ -17,6 +17,7 @@
 package android.transition.support;
 
 import android.transition.support.utils.ArrayMap;
+import android.transition.support.utils.OverlayCompatibilityHelper;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -205,6 +206,7 @@ public class TransitionManager {
     private static void sceneChangeRunTransition(final ViewGroup sceneRoot,
             final android.transition.support.Transition transition) {
         if (transition != null) {
+            OverlayCompatibilityHelper.addViewOverlayCompat(sceneRoot);
             final ViewTreeObserver observer = sceneRoot.getViewTreeObserver();
             final ViewTreeObserver.OnPreDrawListener listener =
                     new ViewTreeObserver.OnPreDrawListener() {

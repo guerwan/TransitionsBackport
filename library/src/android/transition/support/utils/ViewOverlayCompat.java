@@ -5,8 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by stephane on 11/10/13.
@@ -15,11 +21,6 @@ public class ViewOverlayCompat extends View {
     public ViewOverlayCompat(Context context) {
         super(context);
         init();
-    }
-
-    private Paint mPaint;
-    private void init() {
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
 
     public ViewOverlayCompat(Context context, AttributeSet attrs) {
@@ -32,22 +33,100 @@ public class ViewOverlayCompat extends View {
         init();
     }
 
-    private Bitmap bitmap;
-    public void setBitmap(Bitmap bitmap)
-    {
-        this.bitmap = bitmap;
+    private Paint mPaint;
+    private void init() {
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        viewOverlays = new ArrayList<ViewWithBounds>();
+        drawableOverlays = new ArrayList<Drawable>();
     }
 
-    private int left;
-    private int top;
-    public void setBounds(int left, int top)
+    private List<ViewWithBounds> viewOverlays;
+    public void addView(View view, int left, int top)
     {
-        this.left = left;
-        this.top = top;
+        this.viewOverlays.add(new ViewWithBounds(view, left, top));
+        invalidate();
+    }
+
+    public synchronized void removeView(View v)
+    {
+        int i = -1;
+        for(ViewWithBounds viewWithBounds : viewOverlays)
+        {
+            i++;
+            if(viewWithBounds.getView().equals(v))
+                break;
+        }
+        if(i < viewOverlays.size())
+        {
+            viewOverlays.remove(i);
+            invalidate();
+        }
+    }
+
+    private List<Drawable> drawableOverlays;
+    public void addDrawable(Drawable drawable)
+    {
+        this.drawableOverlays.add(drawable);
+        invalidate();
+    }
+
+    public synchronized void removeDrawable(Drawable drawable)
+    {
+        drawableOverlays.remove(drawable);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, left, top, mPaint);
+        int parentLeft = ((View) getParent()).getLeft();
+        int top = ((View) getParent()).getTop();
+
+        for(ViewWithBounds viewWithBounds : viewOverlays)
+        {
+            Bitmap bitmap = viewWithBounds.getBitmap();
+            if(bitmap != null) {
+                float alpha1 = viewWithBounds.view.getAlpha();
+                int alpha = (int) (alpha1 * 255);
+                mPaint.setAlpha(alpha);
+                canvas.drawBitmap(bitmap, viewWithBounds.left - parentLeft, viewWithBounds.top - top, mPaint);
+            }
+        }
+
+        for(Drawable drawable : drawableOverlays)
+        {
+            drawable.draw(canvas);
+        }
+
+
+        if(viewOverlays.size() != 0)
+            ViewCompat.postInvalidateOnAnimation(this);
+
+    }
+
+    private class ViewWithBounds {
+        private View view;
+        private Bitmap bitmap;
+        public int left;
+        public int top;
+
+        private ViewWithBounds(View view, int left, int top) {
+            this.view = view;
+            Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            view.draw(canvas);
+            this.bitmap = bitmap;
+            this.left = left;
+            this.top = top;
+        }
+
+        public Bitmap getBitmap()
+        {
+            return bitmap;
+        }
+
+        public View getView()
+        {
+            return view;
+        }
     }
 }
