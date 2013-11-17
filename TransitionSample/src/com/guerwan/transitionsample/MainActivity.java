@@ -1,14 +1,14 @@
 package com.guerwan.transitionsample;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.transition.support.Scene;
 import android.transition.support.TransitionInflater;
 import android.transition.support.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     Scene mScene1, mScene2, mScene3;
     ViewGroup mSceneRoot;
