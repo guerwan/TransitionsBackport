@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.transition.support;
+package android.support.transition;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

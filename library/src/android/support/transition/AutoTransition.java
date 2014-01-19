@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.transition.support;
+package android.support.transition;
 
 /**
  * Utility class for creating a default transition that automatically fades,

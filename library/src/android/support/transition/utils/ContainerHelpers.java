@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.transition.support.utils;
+package android.support.transition.utils;
 
 class ContainerHelpers {
     static final boolean[] EMPTY_BOOLEANS = new boolean[0];

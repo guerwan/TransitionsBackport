@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package android.transition.support;
+package android.support.transition;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
 import android.support.v4.util.LongSparseArray;
 import android.support.v4.view.ViewCompat;
-import android.transition.support.utils.ArrayMap;
+import android.support.transition.utils.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -34,12 +34,12 @@ import java.util.List;
 /**
  * A Transition holds information about animations that will be run on its
  * targets during a scene change. Subclasses of this abstract class may
- * choreograph several child transitions ({@link android.transition.support.TransitionSet} or they may
+ * choreograph several child transitions ({@link android.support.transition.TransitionSet} or they may
  * perform custom animations themselves. Any Transition has two main jobs:
  * (1) capture property values, and (2) play animations based on changes to
  * captured property values. A custom transition knows what property values
  * on View objects are of interest to it, and also knows how to animate
- * changes to those values. For example, the {@link android.transition.support.Fade} transition tracks
+ * changes to those values. For example, the {@link android.support.transition.Fade} transition tracks
  * changes to visibility-related properties and is able to construct and run
  * animations that fade items in or out based on changes to those properties.
  *
@@ -49,37 +49,37 @@ import java.util.List;
  * a non-UI thread, so changes to the view due to transitions (such as moving
  * and resizing the view) may be out of sync with the display inside those bounds.
  * TextureView is more compatible with transitions in general, but some
- * specific transitions (such as {@link android.transition.support.Fade}) may not be compatible
+ * specific transitions (such as {@link android.support.transition.Fade}) may not be compatible
  * with TextureView because they rely on {@link android.view.ViewOverlay} functionality,
  * which does not currently work with TextureView.</p>
  *
  * <p>Transitions can be declared in XML resource files inside the <code>res/transition</code>
  * directory. Transition resources consist of a tag name for one of the Transition
  * subclasses along with attributes to define some of the attributes of that transition.
- * For example, here is a minimal resource file that declares a {@link android.transition.support.ChangeBounds} transition:</p>
+ * For example, here is a minimal resource file that declares a {@link android.support.transition.ChangeBounds} transition:</p>
  *
  * {@sample development/samples/ApiDemos/res/transition/changebounds.xml ChangeBounds}
  *
  * <p>Note that attributes for the transition are not required, just as they are
  * optional when declared in code; Transitions created from XML resources will use
  * the same defaults as their code-created equivalents. Here is a slightly more
- * elaborate example which declares a {@link android.transition.support.TransitionSet} transition with
- * {@link android.transition.support.ChangeBounds} and {@link android.transition.support.Fade} child transitions:</p>
+ * elaborate example which declares a {@link android.support.transition.TransitionSet} transition with
+ * {@link android.support.transition.ChangeBounds} and {@link android.support.transition.Fade} child transitions:</p>
  *
  * {@sample
  * development/samples/ApiDemos/res/transition/changebounds_fadeout_sequential.xml TransitionSet}
  *
  * <p>In this example, the transitionOrdering attribute is used on the TransitionSet
- * object to change from the default {@link android.transition.support.TransitionSet#ORDERING_TOGETHER} behavior
- * to be {@link android.transition.support.TransitionSet#ORDERING_SEQUENTIAL} instead. Also, the {@link android.transition.support.Fade}
- * transition uses a fadingMode of {@link android.transition.support.Fade#OUT} instead of the default
+ * object to change from the default {@link android.support.transition.TransitionSet#ORDERING_TOGETHER} behavior
+ * to be {@link android.support.transition.TransitionSet#ORDERING_SEQUENTIAL} instead. Also, the {@link android.support.transition.Fade}
+ * transition uses a fadingMode of {@link android.support.transition.Fade#OUT} instead of the default
  * out-in behavior. Finally, note the use of the <code>targets</code> sub-tag, which
  * takes a set of {@link com.guerwan.transitionsbackport.R.styleable#TransitionTarget target} tags, each
  * of which lists a specific <code>targetId</code> which this transition acts upon.
  * Use of targets is optional, but can be used to either limit the time spent checking
  * attributes on unchanging views, or limiting the types of animations run on specific views.
  * In this case, we know that only the <code>grayscaleContainer</code> will be
- * disappearing, so we choose to limit the {@link android.transition.support.Fade} transition to only that view.</p>
+ * disappearing, so we choose to limit the {@link android.support.transition.Fade} transition to only that view.</p>
  *
  * Further information on XML resource descriptions for transitions can be found for
  * {@link com.guerwan.transitionsbackport.R.styleable#Transition}, {@link com.guerwan.transitionsbackport.R.styleable#TransitionSet},
@@ -235,8 +235,8 @@ public abstract class Transition implements Cloneable {
     }
 
     /**
-     * Returns the set of property names used stored in the {@link android.transition.support.TransitionValues}
-     * object passed into {@link #captureStartValues(android.transition.support.TransitionValues)} that
+     * Returns the set of property names used stored in the {@link android.support.transition.TransitionValues}
+     * object passed into {@link #captureStartValues(android.support.transition.TransitionValues)} that
      * this transition cares about for the purposes of canceling overlapping animations.
      * When any transition is started on a given scene root, all transitions
      * currently running on that same scene root are checked to see whether the
@@ -253,7 +253,7 @@ public abstract class Transition implements Cloneable {
      * animating views toward potentially different end values.</p>
      *
      * @return An array of property names as described in the class documentation for
-     * {@link android.transition.support.TransitionValues}. The default implementation returns <code>null</code>.
+     * {@link android.support.transition.TransitionValues}. The default implementation returns <code>null</code>.
      */
     public String[] getTransitionProperties() {
         return null;
@@ -270,7 +270,7 @@ public abstract class Transition implements Cloneable {
      * topmost Transition in the hierarchy) with the sceneRoot and start/end
      * values that the transition may need to set up initial target values
      * and construct an appropriate animation. For example, if an overall
-     * Transition is a {@link android.transition.support.TransitionSet} consisting of several
+     * Transition is a {@link android.support.transition.TransitionSet} consisting of several
      * child transitions in sequence, then some of the child transitions may
      * want to set initial values on target views prior to the overall
      * Transition commencing, to put them in an appropriate state for the
@@ -295,7 +295,7 @@ public abstract class Transition implements Cloneable {
      * implementation returns null.</p>
      *
      * <p>The method is called for every applicable target object, which is
-     * stored in the {@link android.transition.support.TransitionValues#view} field.</p>
+     * stored in the {@link android.support.transition.TransitionValues#view} field.</p>
      *
      *
      * @param sceneRoot The root of the transition hierarchy.
@@ -314,7 +314,7 @@ public abstract class Transition implements Cloneable {
      * This method, essentially a wrapper around all calls to createAnimator for all
      * possible target views, is called with the entire set of start/end
      * values. The implementation in Transition iterates through these lists
-     * and calls {@link #createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues, android.transition.support.TransitionValues)}
+     * and calls {@link #createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues, android.support.transition.TransitionValues)}
      * with each set of start/end values on this transition. The
      * TransitionSet subclass overrides this method and delegates it to
      * each of its children in succession.
@@ -607,12 +607,12 @@ public abstract class Transition implements Cloneable {
      * Captures the values in the start scene for the properties that this
      * transition monitors. These values are then passed as the startValues
      * structure in a later call to
-     * {@link #createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues, android.transition.support.TransitionValues)}.
+     * {@link #createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues, android.support.transition.TransitionValues)}.
      * The main concern for an implementation is what the
      * properties are that the transition cares about and what the values are
      * for all of those properties. The start and end values will be compared
      * later during the
-     * {@link #createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues, android.transition.support.TransitionValues)}
+     * {@link #createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues, android.support.transition.TransitionValues)}
      * method to determine what, if any, animations, should be run.
      *
      * <p>Subclasses must implement this method. The method should only be called by the
@@ -627,8 +627,8 @@ public abstract class Transition implements Cloneable {
      * view.getRotation())</code>. The target view will already be stored in
      * the transitionValues structure when this method is called.
      *
-     * @see #captureEndValues(android.transition.support.TransitionValues)
-     * @see #createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues, android.transition.support.TransitionValues)
+     * @see #captureEndValues(android.support.transition.TransitionValues)
+     * @see #createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues, android.support.transition.TransitionValues)
      */
     public abstract void captureStartValues(TransitionValues transitionValues);
 
@@ -636,12 +636,12 @@ public abstract class Transition implements Cloneable {
      * Captures the values in the end scene for the properties that this
      * transition monitors. These values are then passed as the endValues
      * structure in a later call to
-     * {@link #createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues, android.transition.support.TransitionValues)}.
+     * {@link #createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues, android.support.transition.TransitionValues)}.
      * The main concern for an implementation is what the
      * properties are that the transition cares about and what the values are
      * for all of those properties. The start and end values will be compared
      * later during the
-     * {@link #createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues, android.transition.support.TransitionValues)}
+     * {@link #createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues, android.support.transition.TransitionValues)}
      * method to determine what, if any, animations, should be run.
      *
      * <p>Subclasses must implement this method. The method should only be called by the
@@ -656,8 +656,8 @@ public abstract class Transition implements Cloneable {
      * view.getRotation())</code>. The target view will already be stored in
      * the transitionValues structure when this method is called.
      *
-     * @see #captureStartValues(android.transition.support.TransitionValues)
-     * @see #createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues, android.transition.support.TransitionValues)
+     * @see #captureStartValues(android.support.transition.TransitionValues)
+     * @see #createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues, android.support.transition.TransitionValues)
      */
     public abstract void captureEndValues(TransitionValues transitionValues);
 
@@ -1177,7 +1177,7 @@ public abstract class Transition implements Cloneable {
 
     /**
      * Pauses this transition, sending out calls to {@link
-     * android.transition.support.Transition.TransitionListener#onTransitionPause(android.transition.support.Transition)} to all listeners
+     * android.support.transition.Transition.TransitionListener#onTransitionPause(android.support.transition.Transition)} to all listeners
      * and pausing all running animators started by this transition.
      *
      * @hide
@@ -1204,7 +1204,7 @@ public abstract class Transition implements Cloneable {
 
     /**
      * Resumes this transition, sending out calls to {@link
-     * android.transition.support.Transition.TransitionListener#onTransitionPause(android.transition.support.Transition)} to all listeners
+     * android.support.transition.Transition.TransitionListener#onTransitionPause(android.support.transition.Transition)} to all listeners
      * and pausing all running animators started by this transition.
      *
      * @hide
@@ -1354,8 +1354,8 @@ public abstract class Transition implements Cloneable {
      * This method is called automatically by the Transition and
      * TransitionSet classes when a transition finishes, either because
      * a transition did nothing (returned a null Animator from
-     * {@link android.transition.support.Transition#createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues,
-     * android.transition.support.TransitionValues)}) or because the transition returned a valid
+     * {@link android.support.transition.Transition#createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues,
+     * android.support.transition.TransitionValues)}) or because the transition returned a valid
      * Animator and end() was called in the onAnimationEnd()
      * callback of the AnimatorListener.
      *
@@ -1538,7 +1538,7 @@ public abstract class Transition implements Cloneable {
         /**
          * Notification about the end of the transition. Canceled transitions
          * will always notify listeners of both the cancellation and end
-         * events. That is, {@link #onTransitionEnd(android.transition.support.Transition)} is always called,
+         * events. That is, {@link #onTransitionEnd(android.support.transition.Transition)} is always called,
          * regardless of whether the transition was canceled or played
          * through to completion.
          *
@@ -1548,10 +1548,10 @@ public abstract class Transition implements Cloneable {
 
         /**
          * Notification about the cancellation of the transition.
-         * Note that cancel may be called by a parent {@link android.transition.support.TransitionSet} on
+         * Note that cancel may be called by a parent {@link android.support.transition.TransitionSet} on
          * a child transition which has not yet started. This allows the child
          * transition to restore state on target objects which was set at
-         * {@link #createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues, android.transition.support.TransitionValues)
+         * {@link #createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues, android.support.transition.TransitionValues)
          * createAnimator()} time.
          *
          * @param transition The transition which was canceled.
@@ -1560,10 +1560,10 @@ public abstract class Transition implements Cloneable {
 
         /**
          * Notification when a transition is paused.
-         * Note that createAnimator() may be called by a parent {@link android.transition.support.TransitionSet} on
+         * Note that createAnimator() may be called by a parent {@link android.support.transition.TransitionSet} on
          * a child transition which has not yet started. This allows the child
          * transition to restore state on target objects which was set at
-         * {@link #createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues, android.transition.support.TransitionValues)
+         * {@link #createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues, android.support.transition.TransitionValues)
          * createAnimator()} time.
          *
          * @param transition The transition which was paused.
@@ -1572,10 +1572,10 @@ public abstract class Transition implements Cloneable {
 
         /**
          * Notification when a transition is resumed.
-         * Note that resume() may be called by a parent {@link android.transition.support.TransitionSet} on
+         * Note that resume() may be called by a parent {@link android.support.transition.TransitionSet} on
          * a child transition which has not yet started. This allows the child
          * transition to restore state which may have changed in an earlier call
-         * to {@link #onTransitionPause(android.transition.support.Transition)}.
+         * to {@link #onTransitionPause(android.support.transition.Transition)}.
          *
          * @param transition The transition which was resumed.
          */

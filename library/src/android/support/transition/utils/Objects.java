@@ -1,4 +1,4 @@
-package android.transition.support.utils;
+package android.support.transition.utils;
 
 /**
  * Created by stephane on 11/2/13.

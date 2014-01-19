@@ -1,4 +1,4 @@
-package android.transition.support.utils;
+package android.support.transition.utils;
 
 import android.graphics.drawable.Drawable;
 import android.os.Build;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.transition.support;
+package android.support.transition;
 
 import android.animation.Animator;
 import android.view.View;
@@ -25,13 +25,13 @@ import android.view.ViewGroup;
  * start and end scenes. Visibility is determined not just by the
  * {@link android.view.View#setVisibility(int)} state of views, but also whether
  * views exist in the current view hierarchy. The class is intended to be a
- * utility for subclasses such as {@link android.transition.support.Fade}, which use this visibility
+ * utility for subclasses such as {@link android.support.transition.Fade}, which use this visibility
  * information to determine the specific animations to run when visibility
  * changes occur. Subclasses should implement one or both of the methods
- * {@link #onAppear(android.view.ViewGroup, android.transition.support.TransitionValues, int, android.transition.support.TransitionValues, int)},
- * {@link #onDisappear(android.view.ViewGroup, android.transition.support.TransitionValues, int, android.transition.support.TransitionValues, int)},
+ * {@link #onAppear(android.view.ViewGroup, android.support.transition.TransitionValues, int, android.support.transition.TransitionValues, int)},
+ * {@link #onDisappear(android.view.ViewGroup, android.support.transition.TransitionValues, int, android.support.transition.TransitionValues, int)},
  */
-public abstract class Visibility extends android.transition.support.Transition {
+public abstract class Visibility extends android.support.transition.Transition {
 
     private static final String PROPNAME_VISIBILITY = "android:visibility:visibility";
     private static final String PROPNAME_PARENT = "android:visibility:parent";
@@ -54,19 +54,19 @@ public abstract class Visibility extends android.transition.support.Transition {
         return sTransitionProperties;
     }
 
-    private void captureValues(android.transition.support.TransitionValues transitionValues) {
+    private void captureValues(android.support.transition.TransitionValues transitionValues) {
         int visibility = transitionValues.view.getVisibility();
         transitionValues.values.put(PROPNAME_VISIBILITY, visibility);
         transitionValues.values.put(PROPNAME_PARENT, transitionValues.view.getParent());
     }
 
     @Override
-    public void captureStartValues(android.transition.support.TransitionValues transitionValues) {
+    public void captureStartValues(android.support.transition.TransitionValues transitionValues) {
         captureValues(transitionValues);
     }
 
     @Override
-    public void captureEndValues(android.transition.support.TransitionValues transitionValues) {
+    public void captureEndValues(android.support.transition.TransitionValues transitionValues) {
         captureValues(transitionValues);
     }
 
@@ -75,7 +75,7 @@ public abstract class Visibility extends android.transition.support.Transition {
      * object. This is determined by testing the same properties in the values
      * object that are used to determine whether the object is appearing or
      * disappearing in the {@link
-     * android.transition.support.Transition#createAnimator(android.view.ViewGroup, android.transition.support.TransitionValues, android.transition.support.TransitionValues)}
+     * android.support.transition.Transition#createAnimator(android.view.ViewGroup, android.support.transition.TransitionValues, android.support.transition.TransitionValues)}
      * method. This method can be called by, for example, subclasses that want
      * to know whether the object is visible in the same way that Visibility
      * determines it for the actual animation.
@@ -85,7 +85,7 @@ public abstract class Visibility extends android.transition.support.Transition {
      * @return True if the view reference by <code>values</code> is visible,
      * false otherwise.
      */
-    public boolean isVisible(android.transition.support.TransitionValues values) {
+    public boolean isVisible(android.support.transition.TransitionValues values) {
         if (values == null) {
             return false;
         }
@@ -95,8 +95,8 @@ public abstract class Visibility extends android.transition.support.Transition {
         return visibility == View.VISIBLE && parent != null;
     }
 
-    private VisibilityInfo getVisibilityChangeInfo(android.transition.support.TransitionValues startValues,
-            android.transition.support.TransitionValues endValues) {
+    private VisibilityInfo getVisibilityChangeInfo(android.support.transition.TransitionValues startValues,
+            android.support.transition.TransitionValues endValues) {
         final VisibilityInfo visInfo = new VisibilityInfo();
         visInfo.visibilityChange = false;
         visInfo.fadeIn = false;
@@ -150,8 +150,8 @@ public abstract class Visibility extends android.transition.support.Transition {
     }
 
     @Override
-    public Animator createAnimator(ViewGroup sceneRoot, android.transition.support.TransitionValues startValues,
-            android.transition.support.TransitionValues endValues) {
+    public Animator createAnimator(ViewGroup sceneRoot, android.support.transition.TransitionValues startValues,
+            android.support.transition.TransitionValues endValues) {
         VisibilityInfo visInfo = getVisibilityChangeInfo(startValues, endValues);
         if (visInfo.visibilityChange) {
             // Only transition views that are either targets of this transition
@@ -194,8 +194,8 @@ public abstract class Visibility extends android.transition.support.Transition {
      * should be run.
      */
     public Animator onAppear(ViewGroup sceneRoot,
-            android.transition.support.TransitionValues startValues, int startVisibility,
-            android.transition.support.TransitionValues endValues, int endVisibility) {
+            android.support.transition.TransitionValues startValues, int startVisibility,
+            android.support.transition.TransitionValues endValues, int endVisibility) {
         return null;
     }
 
@@ -216,8 +216,8 @@ public abstract class Visibility extends android.transition.support.Transition {
      * should be run.
      */
     public Animator onDisappear(ViewGroup sceneRoot,
-            android.transition.support.TransitionValues startValues, int startVisibility,
-            android.transition.support.TransitionValues endValues, int endVisibility) {
+            android.support.transition.TransitionValues startValues, int startVisibility,
+            android.support.transition.TransitionValues endValues, int endVisibility) {
         return null;
     }
 }

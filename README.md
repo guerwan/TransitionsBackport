@@ -8,7 +8,7 @@ Usage
 =====
 
 The API is exactly the same as the [Transitions API][2], just change your imports
-from `android.transition.XXX` to `android.transition.support.XXX`. 
+from `android.transition.XXX` to `android.support.transition.XXX`.
 If you use XML files to create your transitions you need to put them in the res/anim folder instead of the res/transition folder.
 
 You can take a look at [this video][3] from Chet Haase explaining how to use the Transitions API.

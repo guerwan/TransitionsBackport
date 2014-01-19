@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.transition.support.utils;
+package android.support.transition.utils;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
@@ -24,7 +24,7 @@ import java.util.Set;
 
 /**
  * Helper for writing standard Java collection interfaces to a data
- * structure like {@link android.transition.support.utils.ArrayMap}.
+ * structure like {@link android.support.transition.utils.ArrayMap}.
  * @hide
  */
 abstract class MapCollections<K, V> {

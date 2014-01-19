@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.transition.support;
+package android.support.transition;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -25,8 +25,8 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.transition.support.utils.OverlayCompatibilityHelper;
-import android.transition.support.utils.RectEvaluator;
+import android.support.transition.utils.OverlayCompatibilityHelper;
+import android.support.transition.utils.RectEvaluator;
 import android.view.View;
 import android.view.ViewGroup;
 

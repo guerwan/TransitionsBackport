@@ -28,3 +28,4 @@ proguard/
 *.iws
 .idea/
 /.gradle/
+/.m2/

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.transition.support.utils;
+package android.support.transition.utils;
 
 import android.util.Log;
 

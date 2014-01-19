@@ -2,9 +2,9 @@ package com.guerwan.transitionsample;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.transition.support.Scene;
-import android.transition.support.TransitionInflater;
-import android.transition.support.TransitionManager;
+import android.support.transition.Scene;
+import android.support.transition.TransitionInflater;
+import android.support.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
 

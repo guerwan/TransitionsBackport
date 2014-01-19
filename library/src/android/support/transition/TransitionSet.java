@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.transition.support;
+package android.support.transition;
 
 import android.animation.TimeInterpolator;
 import android.util.AndroidRuntimeException;
@@ -27,9 +27,9 @@ import java.util.ArrayList;
  * A TransitionSet is a parent of child transitions (including other
  * TransitionSets). Using TransitionSets enables more complex
  * choreography of transitions, where some sets play {@link #ORDERING_TOGETHER} and
- * others play {@link #ORDERING_SEQUENTIAL}. For example, {@link android.transition.support.AutoTransition}
+ * others play {@link #ORDERING_SEQUENTIAL}. For example, {@link android.support.transition.AutoTransition}
  * uses a TransitionSet to sequentially play a Fade(Fade.OUT), followed by
- * a {@link android.transition.support.ChangeBounds}, followed by a Fade(Fade.OUT) transition.
+ * a {@link android.support.transition.ChangeBounds}, followed by a Fade(Fade.OUT) transition.
  *
  * <p>A TransitionSet can be described in a resource file by using the
  * tag <code>transitionSet</code>, along with the standard
@@ -47,9 +47,9 @@ import java.util.ArrayList;
  *     &lt;/transitionSet&gt;
  * </pre>
  */
-public class TransitionSet extends android.transition.support.Transition {
+public class TransitionSet extends android.support.transition.Transition {
 
-    ArrayList<android.transition.support.Transition> mTransitions = new ArrayList<android.transition.support.Transition>();
+    ArrayList<android.support.transition.Transition> mTransitions = new ArrayList<android.support.transition.Transition>();
     private boolean mPlayTogether = true;
     int mCurrentListeners;
     boolean mStarted = false;
@@ -70,7 +70,7 @@ public class TransitionSet extends android.transition.support.Transition {
 
     /**
      * Constructs an empty transition set. Add child transitions to the
-     * set by calling {@link #addTransition(android.transition.support.Transition)} )}. By default,
+     * set by calling {@link #addTransition(android.support.transition.Transition)} )}. By default,
      * child transitions will play {@link #ORDERING_TOGETHER together}.
      */
     public TransitionSet() {
@@ -125,7 +125,7 @@ public class TransitionSet extends android.transition.support.Transition {
      * @param transition A non-null child transition to be added to this set.
      * @return This transitionSet object.
      */
-    public TransitionSet addTransition(android.transition.support.Transition transition) {
+    public TransitionSet addTransition(android.support.transition.Transition transition) {
         if (transition != null) {
             mTransitions.add(transition);
             transition.mParent = this;
@@ -201,7 +201,7 @@ public class TransitionSet extends android.transition.support.Transition {
      * @param transition The transition to be removed.
      * @return This transitionSet object.
      */
-    public TransitionSet removeTransition(android.transition.support.Transition transition) {
+    public TransitionSet removeTransition(android.support.transition.Transition transition) {
         mTransitions.remove(transition);
         transition.mParent = null;
         return this;
@@ -214,7 +214,7 @@ public class TransitionSet extends android.transition.support.Transition {
      */
     private void setupStartEndListeners() {
         TransitionSetListener listener = new TransitionSetListener(this);
-        for (android.transition.support.Transition childTransition : mTransitions) {
+        for (android.support.transition.Transition childTransition : mTransitions) {
             childTransition.addListener(listener);
         }
         mCurrentListeners = mTransitions.size();
@@ -230,7 +230,7 @@ public class TransitionSet extends android.transition.support.Transition {
             mTransitionSet = transitionSet;
         }
         @Override
-        public void onTransitionStart(android.transition.support.Transition transition) {
+        public void onTransitionStart(android.support.transition.Transition transition) {
             if (!mTransitionSet.mStarted) {
                 mTransitionSet.start();
                 mTransitionSet.mStarted = true;
@@ -238,7 +238,7 @@ public class TransitionSet extends android.transition.support.Transition {
         }
 
         @Override
-        public void onTransitionEnd(android.transition.support.Transition transition) {
+        public void onTransitionEnd(android.support.transition.Transition transition) {
             --mTransitionSet.mCurrentListeners;
             if (mTransitionSet.mCurrentListeners == 0) {
                 // All child trans
@@ -255,7 +255,7 @@ public class TransitionSet extends android.transition.support.Transition {
     @Override
     protected void createAnimators(ViewGroup sceneRoot, TransitionValuesMaps startValues,
             TransitionValuesMaps endValues) {
-        for (android.transition.support.Transition childTransition : mTransitions) {
+        for (android.support.transition.Transition childTransition : mTransitions) {
             childTransition.createAnimators(sceneRoot, startValues, endValues);
         }
     }
@@ -270,22 +270,22 @@ public class TransitionSet extends android.transition.support.Transition {
             // Setup sequence with listeners
             // TODO: Need to add listeners in such a way that we can remove them later if canceled
             for (int i = 1; i < mTransitions.size(); ++i) {
-                android.transition.support.Transition previousTransition = mTransitions.get(i - 1);
-                final android.transition.support.Transition nextTransition = mTransitions.get(i);
+                android.support.transition.Transition previousTransition = mTransitions.get(i - 1);
+                final android.support.transition.Transition nextTransition = mTransitions.get(i);
                 previousTransition.addListener(new TransitionListenerAdapter() {
                     @Override
-                    public void onTransitionEnd(android.transition.support.Transition transition) {
+                    public void onTransitionEnd(android.support.transition.Transition transition) {
                         nextTransition.runAnimators();
                         transition.removeListener(this);
                     }
                 });
             }
-            android.transition.support.Transition firstTransition = mTransitions.get(0);
+            android.support.transition.Transition firstTransition = mTransitions.get(0);
             if (firstTransition != null) {
                 firstTransition.runAnimators();
             }
         } else {
-            for (android.transition.support.Transition childTransition : mTransitions) {
+            for (android.support.transition.Transition childTransition : mTransitions) {
                 childTransition.runAnimators();
             }
         }
@@ -295,7 +295,7 @@ public class TransitionSet extends android.transition.support.Transition {
     public void captureStartValues(TransitionValues transitionValues) {
         int targetId = transitionValues.view.getId();
         if (isValidTarget(transitionValues.view, targetId)) {
-            for (android.transition.support.Transition childTransition : mTransitions) {
+            for (android.support.transition.Transition childTransition : mTransitions) {
                 if (childTransition.isValidTarget(transitionValues.view, targetId)) {
                     childTransition.captureStartValues(transitionValues);
                 }
@@ -307,7 +307,7 @@ public class TransitionSet extends android.transition.support.Transition {
     public void captureEndValues(TransitionValues transitionValues) {
         int targetId = transitionValues.view.getId();
         if (isValidTarget(transitionValues.view, targetId)) {
-            for (android.transition.support.Transition childTransition : mTransitions) {
+            for (android.support.transition.Transition childTransition : mTransitions) {
                 if (childTransition.isValidTarget(transitionValues.view, targetId)) {
                     childTransition.captureEndValues(transitionValues);
                 }
@@ -376,10 +376,10 @@ public class TransitionSet extends android.transition.support.Transition {
     @Override
     public TransitionSet clone() {
         TransitionSet clone = (TransitionSet) super.clone();
-        clone.mTransitions = new ArrayList<android.transition.support.Transition>();
+        clone.mTransitions = new ArrayList<android.support.transition.Transition>();
         int numTransitions = mTransitions.size();
         for (int i = 0; i < numTransitions; ++i) {
-            clone.addTransition((android.transition.support.Transition) mTransitions.get(i).clone());
+            clone.addTransition((android.support.transition.Transition) mTransitions.get(i).clone());
         }
         return clone;
     }

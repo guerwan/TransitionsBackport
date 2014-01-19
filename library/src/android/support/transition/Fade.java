@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package android.transition.support;
+package android.support.transition;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.transition.support.utils.OverlayCompatibilityHelper;
+import android.support.transition.utils.OverlayCompatibilityHelper;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +44,8 @@ import android.view.ViewGroup;
  * parent (so its parent hierarchy was removed, but it was not removed from
  * its parent), then it will be left alone to avoid side-effects from
  * improperly removing it from its parent. The only exception to this is if
- * the previous {@link android.transition.support.Scene} was
- * {@link android.transition.support.Scene#getSceneForLayout(android.view.ViewGroup, int, android.content.Context)
+ * the previous {@link android.support.transition.Scene} was
+ * {@link android.support.transition.Scene#getSceneForLayout(android.view.ViewGroup, int, android.content.Context)
  * created from a layout resource file}, then it is considered safe to un-parent
  * the starting scene view in order to fade it out.</p>
  *
