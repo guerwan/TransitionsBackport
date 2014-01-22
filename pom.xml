@@ -6,7 +6,7 @@
     <groupId>com.guerwan</groupId>
     <artifactId>transition</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>Android Transition Backport</name>
     <description>Backport of the Android transition framework introduced with Android KitKat.</description>
@@ -22,7 +22,8 @@
         <url>https://github.com/guerwan/TransitionsBackport/</url>
         <connection>scm:git:git://github.com/guerwan/TransitionsBackport.git</connection>
         <developerConnection>scm:git:git@github.com:guerwan/TransitionsBackport.git</developerConnection>
-    </scm>
+      <tag>transition-1.0</tag>
+  </scm>
 
     <developers>
         <developer>
