@@ -54,7 +54,7 @@ public class ViewOverlayCompat extends View {
             if(viewWithBounds.getView().equals(v))
                 break;
         }
-        if(i < viewOverlays.size())
+        if(i > -1 && i < viewOverlays.size())
         {
             viewOverlays.remove(i);
             invalidate();
