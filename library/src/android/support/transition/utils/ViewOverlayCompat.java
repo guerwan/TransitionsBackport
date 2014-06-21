@@ -71,6 +71,7 @@ public class ViewOverlayCompat extends View {
     public synchronized void removeDrawable(Drawable drawable)
     {
         drawableOverlays.remove(drawable);
+        invalidate();
     }
 
     @Override
@@ -95,8 +96,7 @@ public class ViewOverlayCompat extends View {
         }
 
 
-        if(viewOverlays.size() != 0)
-            ViewCompat.postInvalidateOnAnimation(this);
+        ViewCompat.postInvalidateOnAnimation(this);
 
     }
 
