@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_transitionsBackport"></string>
+    <string name="library_transitionsBackport_author">Stéphane Guérin</string>
+    <string name="library_transitionsBackport_authorWebsite">https://github.com/guerwan</string>
+    <string name="library_transitionsBackport_libraryName">Transitions Backport</string>
+<string name="library_transitionsBackport_libraryDescription">Android library for using the Transitions API released with Android KitKat on older versions of Android. At the moment, it is compatible with Android 4.0 (API 14) and above.
+</string>
+    <string name="library_transitionsBackport_libraryVersion">1.1</string>
+    <string name="library_transitionsBackport_libraryWebsite">https://github.com/guerwan/TransitionsBackport</string>
+    <string name="library_transitionsBackport_licenseId">apache_2_0</string>
+    <string name="library_transitionsBackport_isOpenSource">true</string>
+    <string name="library_transitionsBackport_repositoryLink">https://github.com/guerwan/TransitionsBackport.git</string>
+</resources>
